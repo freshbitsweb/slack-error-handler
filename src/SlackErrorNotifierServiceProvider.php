@@ -54,7 +54,7 @@ class SlackErrorNotifierServiceProvider extends ServiceProvider
             $logger = $logWriter->getMonolog();
 
             // Add slack handler to the monologger
-            $slackHandler = new SlackWebhookHandler($webhookUrl, null, null, true, null, false, true, $this->getlogLevel($logger));
+            $slackHandler = new SlackWebhookHandler($webhookUrl, null, config('slack_error_notifier.add_user_name', null), true, config('slack_error_notifier.add_icon_emoji', null), false, true, $this->getlogLevel($logger));
             $slackHandler = $this->pushProcessors($slackHandler);
             $logger->pushHandler($slackHandler);
         }
