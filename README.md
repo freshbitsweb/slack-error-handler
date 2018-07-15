@@ -18,7 +18,7 @@ This is a *plug-and-play* Laravel package to send a message to a Slack channel v
 
 1) Install the package by running this command in your terminal/cmd:
 ```
-composer require freshbitsweb/slack-error-notifier
+composer require mriwech/slack-error-notifier
 ```
 
 2) Import config file by running this command in your terminal/cmd:
@@ -52,6 +52,8 @@ This package uses *Monolog* library and sends a notification message based on th
 ## Authors
 
 * [**Gaurav Makhecha**](https://github.com/gauravmak) - *Initial work*
+
+* [**Marouène TAYARI**](https://github.com/Mriwech) - *Upturn*
 
 See also the list of [contributors](https://github.com/freshbitsweb/slack-error-notifier/graphs/contributors) who participated in this project.
 
