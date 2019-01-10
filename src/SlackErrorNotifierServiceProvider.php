@@ -49,18 +49,20 @@ class SlackErrorNotifierServiceProvider extends ServiceProvider
      * @return void
      */
     protected function pushSlackHandlerToLogger()
-    {
-        // Only if webhook URL is available
-        if ($webhookUrl = config('slack_error_notifier.webhook_url')) {
-            $logWriter = $this->app->make(LoggerInterface::class);
-            $logger = $logWriter->getMonolog();
-
-            // Add slack handler to the monologger
-            $slackHandler = new SlackWebhookHandler($webhookUrl, null, null, true, null, false, true, $this->getlogLevel($logger));
-            $slackHandler = $this->pushProcessors($slackHandler);
-            $logger->pushHandler($slackHandler);
-        }
-    }
+	{
+		// Only if webhook URL is available
+		if ($webhookUrl = config('slack_error_notifier.webhook_url')) {
+			$logWriter = $this->app->make(LoggerInterface::class);
+			$logger = $logWriter->getLogger();
+			
+			// Add slack handler to the monologger
+			$slackHandler = new SlackWebhookHandler($webhookUrl, null, null, true, null, false, true, $this->getlogLevel($logger));
+			$slackHandler->pushProcessor(new MemoryUsageProcessor);
+			$slackHandler->pushProcessor(new RequestDataProcessor);
+			$slackHandler->pushProcessor(new WebProcessor);
+			$logger->pushHandler($slackHandler);
+		}
+	}
 
     /**
      * Fetches and returns the log level for the new handler
